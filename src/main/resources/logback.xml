@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration debug="false">
+	<!--Daily rolling file appender -->
+	<appender name="APP_LOG"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>%d{yyyy-MM-dd_HH:mm:ss} %-5level %class - %msg%n
+			</Pattern>
+		</encoder>
+		<file>${LOG_HOME}/logs/goi/${TC_CLUSTER}/${TC_INSTANCE}/application.log
+		</file>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>${LOG_HOME}/logs/goi/${TC_CLUSTER}/${TC_INSTANCE}/application.%d{yyyy-MM-dd}.%i.log
+			</FileNamePattern>
+			<maxHistory>7</maxHistory>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>20MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+	</appender>
+
+	<logger name="com.test.testapp" level="ERROR" additivity="false">
+		<appender-ref ref="APP_LOG" />
+	</logger>
+
+	<root>
+		<level value="ERROR" />
+		<appender-ref ref="APP_LOG" />
+	</root>
+</configuration>
